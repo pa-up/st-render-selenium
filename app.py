@@ -57,26 +57,28 @@ def call_from_ajax():
             driver = browser_setup()
             driver.get(searched_url)
             driver.implicitly_wait(20)
-            week_recommend_elements = driver.find_elements(By.CSS_SELECTOR , "div.recommendItem__inner")
-            week_recommend_list = []
-            for element in week_recommend_elements:
-                week_recommend_text = element.text
-                week_recommend_list.append(week_recommend_text)
+            week_recommend_elements = driver.find_elements(By.CSS_SELECTOR , "div")
+            # week_recommend_list = []
+            # for element in week_recommend_elements:
+            #     week_recommend_text = element.text
+            #     week_recommend_list.append(week_recommend_text)
 
     
-            html_str = f"""
-                <h3>正常に取得できました</h3>
-                <div class="button019">
-                <h5>
-            """
-            for week_recommend in week_recommend_list:
-                html_str = html_str + "<p>" + week_recommend + "</p>"
+            # html_str = f"""
+            #     <h3>正常に取得できました</h3>
+            #     <div class="button019">
+            #     <h5>
+            # """
+            # for week_recommend in week_recommend_list:
+            #     html_str = html_str + "<p>" + week_recommend + "</p>"
 
-            html_str = html_str + """
-                </h5>
-                </div>
-                <p><br></p>
-            """
+            # html_str = html_str + """
+            #     </h5>
+            #     </div>
+            #     <p><br></p>
+            # """
+
+            html_str = "<h3>正常に取得できました</h3>" + week_recommend_elements.text
 
 
 
