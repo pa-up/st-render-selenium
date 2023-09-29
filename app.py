@@ -56,7 +56,7 @@ def call_from_ajax():
             searched_url = "https://www.bookoffonline.co.jp/"
             driver = browser_setup()
             driver.get(searched_url)
-            driver.implicitly_wait(10)
+            driver.implicitly_wait(20)
             week_recommend_elements = driver.find_elements(By.CSS_SELECTOR , "div.recommendItem__inner")
             week_recommend_list = []
             for element in week_recommend_elements:
