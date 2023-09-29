@@ -4,56 +4,26 @@
         <title>ブックオフオンライン一括取得</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="{{ url_for('static', filename='js/ajax.js') }}"></script>
 
-        <script language="javascript" type="text/javascript">
+        <!-- <script language="javascript" type="text/javascript">
             function OnButtonClick() {
                 target = document.getElementById("js_output");
                 target.innerHTML = "<br><h3>実行中〜少々お待ちください</h3>";
             }
-        </script>
+        </script> -->
     </head>
 
     <body style="padding: 10px 30px;">
         <h1>ブックオフオンライン一括取得</h1>
         <p style="margin-top: 40px;"></p>
 
-        <!-- フォームに関するUI -->
-        <form action="/" method="POST" id="ajax-result" enctype="multipart/form-data">
-            <input type="hidden" name="start_scraping" value="true">
-            <h3>スクレイピングのオプション</h3>
-            <p>
-                ブラウジングの様子を目視するか否か<br>
-                <input type="radio" name="browse_visually" value="yes"> 目視する
-                <input type="radio" name="browse_visually" value="no"> 目視しない
-                <div class = "annotation">
-                    ブラウジングの様子を目視しない方が処理速度が若干上がりますが、
-                    <br>「目視する」を選択することで、処理の正しさを確認できます。
-                </div>
-            </p>
-            <button type="submit" class="btn" onclick="OnButtonClick();" style="margin-top: 30px;">取得開始</button>
-            <p></p>
-            {% if not csv_path_from_static %}
-                <div id="js_output"></div>
-            {% endif %}
-        </form>
-        <p><br></p>
-        
-        <script>
-            document.getElementById("ajax-result").addEventListener("submit", function () {
-                $('.btn').remove();
-            });
-        </script>
-        <!-- フォームに関するUIここまで -->
+        <input type="button" id="submit" class="btn" value="取得開始" onclick="send_to_python()" style="margin-top: 30px;">
+        <div id="js_output"></div>
 
-
-
-        {% if p_text %}
-            <h3>正常に取得できました</h3>
-            <div class="button019">
-                <h3>p_text : {{ p_text }}</h3>
-            </div>
-            <p><br></p>
-        {% endif %}
+        <p><br><br></p>
+        <div id="result"></div>
 
         <p><br><br></p>
         
