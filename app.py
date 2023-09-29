@@ -44,14 +44,21 @@ def call_from_ajax():
     if request.method == "POST":
         # ここにPythonの処理を書く
         try:
-            print(f"非同期処理開始")
-
-            searched_url = "https://www.bookoffonline.co.jp/"
+            URL = 'https://tonari-it.com/scraping-test/'
             driver = browser_setup()
-            driver.get(searched_url)
+            driver.get(URL)
             driver.implicitly_wait(5)
-            time.sleep(3)
-            p_text = driver.find_element(By.TAG_NAME , "p").text
+            p_text = driver.find_element(By.CSS_SELECTOR, "#hoge").text
+
+
+            # print(f"非同期処理開始")
+
+            # searched_url = "https://www.bookoffonline.co.jp/"
+            # driver = browser_setup()
+            # driver.get(searched_url)
+            # driver.implicitly_wait(5)
+            # time.sleep(3)
+            # p_text = driver.find_element(By.TAG_NAME , "p").text
 
             html_str = f"""
             <h3>正常に取得できました</h3>
