@@ -1,5 +1,6 @@
 from flask import Flask , request , render_template
 import json
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
@@ -48,6 +49,7 @@ def call_from_ajax():
             searched_url = "https://www.bookoffonline.co.jp/"
             driver = browser_setup()
             driver.get(searched_url)
+            time.sleep(3)
             p_text = driver.find_element(By.TAG_NAME , "p").text
 
             html_str = f"""
