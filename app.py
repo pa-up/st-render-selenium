@@ -53,32 +53,32 @@ def call_from_ajax():
 
             # print(f"非同期処理開始")
 
-            searched_url = "https://www.bookoffonline.co.jp/"
+            searched_url = "https://www.google.com/search?q=%E6%A4%9C%E7%B4%A2%E7%B5%90%E6%9E%9C&rlz=1C5CHFA_enJP930JP930&oq=%E6%A4%9C%E7%B4%A2%E7%B5%90%E6%9E%9C&aqs=chrome.0.69i59j0i512l4j69i61l3.2918j1j7&sourceid=chrome&ie=UTF-8"
             driver = browser_setup()
             driver.get(searched_url)
-            driver.implicitly_wait(20)
-            week_recommend_elements = driver.find_elements(By.CSS_SELECTOR , "div")
-            # week_recommend_list = []
-            # for element in week_recommend_elements:
-            #     week_recommend_text = element.text
-            #     week_recommend_list.append(week_recommend_text)
+            driver.implicitly_wait(5)
+            week_recommend_elements = driver.find_elements(By.CSS_SELECTOR , "h3")
+            week_recommend_list = []
+            for element in week_recommend_elements:
+                week_recommend_text = element.text
+                week_recommend_list.append(week_recommend_text)
 
     
-            # html_str = f"""
-            #     <h3>正常に取得できました</h3>
-            #     <div class="button019">
-            #     <h5>
-            # """
-            # for week_recommend in week_recommend_list:
-            #     html_str = html_str + "<p>" + week_recommend + "</p>"
+            html_str = f"""
+                <h3>正常に取得できました</h3>
+                <div class="button019">
+                <h5>
+            """
+            for week_recommend in week_recommend_list:
+                html_str = html_str + "<p>" + week_recommend + "</p>"
 
-            # html_str = html_str + """
-            #     </h5>
-            #     </div>
-            #     <p><br></p>
-            # """
+            html_str = html_str + """
+                </h5>
+                </div>
+                <p><br></p>
+            """
 
-            html_str = "<h3>正常に取得できました</h3>" + week_recommend_elements.text
+            # html_str = "<h3>正常に取得できました</h3>" + week_recommend_elements.text
 
 
 
