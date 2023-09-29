@@ -44,29 +44,42 @@ def call_from_ajax():
     if request.method == "POST":
         # ここにPythonの処理を書く
         try:
-            URL = 'https://tonari-it.com/scraping-test/'
-            driver = browser_setup()
-            driver.get(URL)
-            driver.implicitly_wait(5)
-            p_text = driver.find_element(By.CSS_SELECTOR, "#hoge").text
+            # URL = 'https://tonari-it.com/scraping-test/'
+            # driver = browser_setup()
+            # driver.get(URL)
+            # driver.implicitly_wait(5)
+            # p_text = driver.find_element(By.CSS_SELECTOR, "#hoge").text
 
 
             # print(f"非同期処理開始")
 
-            # searched_url = "https://www.bookoffonline.co.jp/"
-            # driver = browser_setup()
-            # driver.get(searched_url)
-            # driver.implicitly_wait(5)
-            # time.sleep(3)
-            # p_text = driver.find_element(By.TAG_NAME , "p").text
+            searched_url = "https://www.bookoffonline.co.jp/"
+            driver = browser_setup()
+            driver.get(searched_url)
+            driver.implicitly_wait(10)
+            week_recommend_elements = driver.find_elements(By.CSS_SELECTOR , "div.recommendItem__inner")
+            week_recommend_list = []
+            for element in week_recommend_elements:
+                week_recommend_text = element.text
+                week_recommend_list.append(week_recommend_text)
 
+    
             html_str = f"""
-            <h3>正常に取得できました</h3>
-            <div class="button019">
-                <h3>p_text : {p_text}</h3>
-            </div>
-            <p><br></p>
-        """
+                <h3>正常に取得できました</h3>
+                <div class="button019">
+                <h5>
+            """
+            for week_recommend in week_recommend_list:
+                html_str = html_str + "<p>" + week_recommend + "</p>"
+
+            html_str = html_str + """
+                </h5>
+                </div>
+                <p><br></p>
+            """
+
+
+
         except Exception as e:
             html_str = str(e)
         dict = {"answer": html_str}      # 辞書
@@ -86,4 +99,4 @@ def call_from_ajax():
 
 
 if __name__ == "__main__":
-    app.run(port=7777 , debug=True)
+    app.run(port=9090 , debug=True)
