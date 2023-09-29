@@ -49,6 +49,7 @@ def call_from_ajax():
             searched_url = "https://www.bookoffonline.co.jp/"
             driver = browser_setup()
             driver.get(searched_url)
+            driver.implicitly_wait(5)
             time.sleep(3)
             p_text = driver.find_element(By.TAG_NAME , "p").text
 
