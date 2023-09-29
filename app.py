@@ -53,11 +53,11 @@ def call_from_ajax():
 
             # print(f"非同期処理開始")
 
-            searched_url = "https://www.google.com/search?q=%E6%A4%9C%E7%B4%A2%E7%B5%90%E6%9E%9C&rlz=1C5CHFA_enJP930JP930&oq=%E6%A4%9C%E7%B4%A2%E7%B5%90%E6%9E%9C&aqs=chrome.0.69i59j0i512l4j69i61l3.2918j1j7&sourceid=chrome&ie=UTF-8"
+            searched_url = "https://www.padi.co.jp/"
             driver = browser_setup()
             driver.get(searched_url)
             driver.implicitly_wait(10)
-            week_recommend_elements = driver.find_elements(By.CSS_SELECTOR , "h3")
+            week_recommend_elements = driver.find_elements(By.CSS_SELECTOR , "div.visible-xs")
             week_recommend_list = []
             for element in week_recommend_elements:
                 week_recommend_text = element.text
