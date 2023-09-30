@@ -87,13 +87,10 @@ def call_from_ajax():
                 <p><br></p>
             """
 
-            page_html_str = driver.page_source
-
-            # html_str = "<h3>正常に取得できました</h3>" + week_recommend_elements.text
 
         except Exception as e:
             html_str = str(e)
-        dict = {"answer": html_str , "answer2": page_html_str}      # 辞書
+        dict = {"answer": html_str}      # 辞書
     return json.dumps(dict)             # 辞書をJSONにして返す
 
 # @app.route("/call_from_ajax", methods = ["POST"])

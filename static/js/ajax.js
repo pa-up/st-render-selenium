@@ -10,9 +10,7 @@ function send_to_python() {
         var dict = JSON.parse(received_data);   // JSONを連想配列にする
         // 以下、Javascriptで料理する
         var answer = dict["answer"];
-        var answer2 = dict["answer2"];
         $("#result").html(answer);              // html要素を書き換える
-        $("#result2").html(answer2);
     }).fail(function () {
         console.log("失敗");
     });
