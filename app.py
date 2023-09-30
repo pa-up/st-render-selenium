@@ -1,15 +1,9 @@
-from flask import Flask , request , render_template
-import json
-import time
+import streamlit as st
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
-from bs4 import BeautifulSoup
-
-
-app = Flask(__name__)
 
 
 def browser_setup(browse_visually = "no"):
@@ -26,80 +20,31 @@ def browser_setup(browse_visually = "no"):
     return browser
 
 
-@app.route("/")
-def index():
-    # if request.method == 'POST' and request.form['start_scraping'] == "true":
-    #     browse_visually = request.form['browse_visually'] 
 
-    #     searched_url = "https://www.bookoffonline.co.jp/"
-    #     driver = browser_setup(browse_visually)
-    #     driver.get(searched_url)
-    #     p_text = driver.find_element(By.TAG_NAME , "p").text
+def main():
+    st.title("Render.com の selenium 実証")
+    st.write("<p></p>", unsafe_allow_html=True)
 
-    #     return render_template("index.html" , p_text = p_text)
+    searched_url = "https://shopping.bookoff.co.jp/"
+    print(f"ドライバーセット完了")
 
-    # else:
-        return render_template("index.html")
+    if st.button("スクレイピング開始"):
+        st.write("<p><br></p>", unsafe_allow_html=True)
 
-@app.route("/call_from_ajax", methods = ["POST"])
-def call_from_ajax():
-    if request.method == "POST":
-        # ここにPythonの処理を書く
-        try:
-            # URL = 'https://tonari-it.com/scraping-test/'
-            # driver = browser_setup()
-            # driver.get(URL)
-            # driver.implicitly_wait(5)
-            # p_text = driver.find_element(By.CSS_SELECTOR, "#hoge").text
+        driver = browser_setup()
+        driver.get(searched_url)
+        print(f"ページアクセス完了")
+        driver.implicitly_wait(5)
+        
+        week_recommend_elements = driver.find_element(By.CSS_SELECTOR , "section.recommend__inner").find_elements(By.CSS_SELECTOR , "div.recommend__list")
+        print(f"該当のhtml要素取得完了")
+        week_recommend_list = []
+        st.write(f"<h3>正常に取得できました</h3>" , unsafe_allow_html=True)
+        for element in week_recommend_elements:
+            week_recommend_text = element.text
+            st.write(week_recommend_text)
 
-
-            print(f"非同期処理開始")
-
-            searched_url = "https://shopping.bookoff.co.jp/"
-            driver = browser_setup()
-            driver.get(searched_url)
-            driver.implicitly_wait(10)
-            
-            week_recommend_elements = driver.find_element(By.CSS_SELECTOR , "section.recommend__inner").find_elements(By.CSS_SELECTOR , "div.recommend__list")
-            week_recommend_list = []
-            for element in week_recommend_elements:
-                week_recommend_text = element.text
-                print(f"week_recommend_text : {week_recommend_text}")
-                week_recommend_list.append(week_recommend_text)
-
-    
-            html_str = f"""
-                <h3>正常に取得できました</h3>
-                <div class="button019">
-                <h5>
-            """
-            for week_recommend in week_recommend_list:
-                html_str = html_str + "<p>" + week_recommend + "</p>"
-
-            html_str = html_str + """
-                </h5>
-                </div>
-                <p><br></p>
-            """
+if __name__ == '__main__':
+    main()
 
 
-        except Exception as e:
-            html_str = str(e)
-        dict = {"answer": html_str}      # 辞書
-    return json.dumps(dict)             # 辞書をJSONにして返す
-
-# @app.route("/call_from_ajax", methods = ["POST"])
-# def call_from_ajax():
-#     if request.method == "POST":
-#         # ここにPythonの処理を書く
-#         try:
-#             name = request.form["data"]
-#             message = f"フン。<b style='border: 2px solid red;'>{name}</b>というのかい。贅沢な名だねぇ。<br>"
-#         except Exception as e:
-#             message = str(e)
-#         dict = {"answer": message}      # 辞書
-#     return json.dumps(dict)             # 辞書をJSONにして返す
-
-
-if __name__ == "__main__":
-    app.run(port=9090 , debug=True)
