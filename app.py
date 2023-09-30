@@ -53,16 +53,23 @@ def call_from_ajax():
             # p_text = driver.find_element(By.CSS_SELECTOR, "#hoge").text
 
 
-            # print(f"非同期処理開始")
+            print(f"非同期処理開始")
 
-            searched_url = "https://www.padi.co.jp/"
+            searched_url = "https://shopping.bookoff.co.jp/"
             driver = browser_setup()
             driver.get(searched_url)
             driver.implicitly_wait(10)
-            week_recommend_elements = driver.find_elements(By.CSS_SELECTOR , "div.visible-xs")
+            
+            # week_recommend_elements = driver.find_element(By.CSS_SELECTOR , "section.recommend__inner")
+            # print(f"week_recommend_elements : {week_recommend_elements}")
+            week_recommend_elements = driver.find_element(By.CSS_SELECTOR , "section.recommend__inner").find_elements(By.CSS_SELECTOR , "div.recommend__list")
+            # week_recommend_elements = driver.find_element(By.CSS_SELECTOR , "div.recommend__list").text
+
+            print(f"week_recommend_elements : {week_recommend_elements}")
             week_recommend_list = []
             for element in week_recommend_elements:
                 week_recommend_text = element.text
+                print(f"week_recommend_text : {week_recommend_text}")
                 week_recommend_list.append(week_recommend_text)
 
     
@@ -80,16 +87,13 @@ def call_from_ajax():
                 <p><br></p>
             """
 
-            page_html = driver.page_source
-            page_soup = BeautifulSoup(page_html, 'html.parser')
+            page_html_str = driver.page_source
 
             # html_str = "<h3>正常に取得できました</h3>" + week_recommend_elements.text
 
-
-
         except Exception as e:
             html_str = str(e)
-        dict = {"answer": html_str , "answer2": page_soup}      # 辞書
+        dict = {"answer": html_str , "answer2": "page_html_str"}      # 辞書
     return json.dumps(dict)             # 辞書をJSONにして返す
 
 # @app.route("/call_from_ajax", methods = ["POST"])
