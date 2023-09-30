@@ -60,12 +60,7 @@ def call_from_ajax():
             driver.get(searched_url)
             driver.implicitly_wait(10)
             
-            # week_recommend_elements = driver.find_element(By.CSS_SELECTOR , "section.recommend__inner")
-            # print(f"week_recommend_elements : {week_recommend_elements}")
             week_recommend_elements = driver.find_element(By.CSS_SELECTOR , "section.recommend__inner").find_elements(By.CSS_SELECTOR , "div.recommend__list")
-            # week_recommend_elements = driver.find_element(By.CSS_SELECTOR , "div.recommend__list").text
-
-            print(f"week_recommend_elements : {week_recommend_elements}")
             week_recommend_list = []
             for element in week_recommend_elements:
                 week_recommend_text = element.text
