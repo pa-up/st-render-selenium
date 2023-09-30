@@ -6,6 +6,8 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
+from bs4 import BeautifulSoup
+
 
 app = Flask(__name__)
 
@@ -78,13 +80,16 @@ def call_from_ajax():
                 <p><br></p>
             """
 
+            page_html = driver.page_source
+            page_soup = BeautifulSoup(page_html, 'html.parser')
+
             # html_str = "<h3>正常に取得できました</h3>" + week_recommend_elements.text
 
 
 
         except Exception as e:
             html_str = str(e)
-        dict = {"answer": html_str}      # 辞書
+        dict = {"answer": html_str , "answer2": page_soup}      # 辞書
     return json.dumps(dict)             # 辞書をJSONにして返す
 
 # @app.route("/call_from_ajax", methods = ["POST"])
